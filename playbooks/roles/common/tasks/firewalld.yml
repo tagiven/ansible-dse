@@ -6,20 +6,10 @@
   command: firewall-cmd --zone=internal --change-interface='{{ internal_int  }}'
 
 - name: setup firewalld external allows 
-  command: firewall-cmd --permanent --zone=external --add-source='{{ hostvars[item]['ansible_eth0']['ipv4']['address'] }}/32' 
+  command: firewall-cmd --permanent --zone=external --add-rich-rule='rule family="ipv4" source address="{{ hostvars[item]['ansible_eth0']['ipv4']['address'] }}" accept' 
   with_items: play_hosts
 
 - name: setup firewalld internal allows 
-  command: firewall-cmd --permanent --zone=internal --add-source='{{ hostvars[item]['ansible_eth1']['ipv4']['address'] }}/32'
+  command: firewall-cmd --permanent --zone=internal --add-rich-rule='rule family="ipv4" source address="{{ hostvars[item]['ansible_eth1']['ipv4']['address'] }}" accept' 
   with_items: play_hosts
   notify: reload firewalld
-
-
-
-#- name: setup firewalld external allows 
-#  firewalld: source='{{ hostvars[item]['ansible_eth0']['ipv4']['address'] }}/32' perminent=true state=enabled
-#  with_items: play_hosts
-#
-#- name: setup firewalld internal allows 
-#  firewalld: source='{{ hostvars[item]['ansible_eth1']['ipv4']['address'] }}/32' perminent=true state=enabled
-#  with_items: play_hosts

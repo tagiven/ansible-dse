@@ -3,6 +3,8 @@
   sysctl: name=vm.swappiness value=0 state=present
 
 - include: firewalld.yml
+  tags:
+    - firewall
 
 - name: install java
   yum: name=java-1.7.0-openjdk state=installed
