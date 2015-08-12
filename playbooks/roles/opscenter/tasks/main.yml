@@ -4,6 +4,27 @@
 - name: start opscenter
   service: name=opscenterd state=started
 
+- name: upload cluster definition
+  template: src=cluster_def.j2 dest=/tmp/cluster_def mode=0644
+  tags:
+    - cluster_create
+
+- name: Slurp the cluster definition
+  slurp: src=/tmp/cluster_def
+  register: cluster_def
+  tags:
+    - cluster_create
+
+- name: register cluster in opscenter
+  uri:
+    url=http://{{ opscenter_uri }}:8888/cluster-configs
+    method=POST
+    body='{{ cluster_def.content | b64decode }}'
+    status_code=201
+  register: cluster
+  tags:
+    - cluster_create
+
 #- name: login to opscenter and get session 
 #  uri:
 #    url: {{ opscenter_uri }}/opscenter/index.html

@@ -277,7 +277,7 @@ seed_provider:
       parameters:
           # seeds is actually a comma-delimited list of addresses.
           # Ex: "<ip1>,<ip2>,<ip3>"
-          - seeds: "{% for seed in groups['nodes'] -%}
+          - seeds: "{% for seed in groups['dse-cluster'] -%}
           {{ hostvars[seed]['ansible_eth0']['ipv4']['address'] }}
           {%- if not loop.last %}, {% endif -%}
           {%- endfor %}"
