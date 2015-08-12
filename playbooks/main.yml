@@ -1,0 +1,28 @@
+- name: "Add nodes to required groups"
+  hosts: localhost
+  connection: local
+  gather_facts: False
+  tasks:
+    - name: "Add all cluster nodes to the dse-cluster group"
+      add_host:
+        name: "{{ hostvars[item].inventory_hostname }}"
+        groups: dse-cluster
+      with_flattened:
+        - groups['nodes']|default([])
+    - name: "Add the first node to the opscenter variable group"
+      add_host:
+        name: "{{ hostvars[item].inventory_hostname }}"
+        groups: opscenter-node
+      with_items: groups['nodes']|sort|first
+
+- name: run common
+  hosts: dse-cluster
+  remote_user: root
+  roles:
+    - common
+
+- name: "Apply the opscenter role to the opscenter group"
+  hosts: opscenter-node
+  remote_user: root
+  roles:
+    - opscenter

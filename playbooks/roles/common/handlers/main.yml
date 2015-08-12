@@ -1,0 +1,13 @@
+---
+- name: reload firewalld
+  command: firewall-cmd --reload
+  notify: Gather facts
+
+- name: restart dse
+  service: name=dse state=restarted
+
+- name: start dse
+  service: name=dse state=start
+
+- name: Gather facts
+  action: setup

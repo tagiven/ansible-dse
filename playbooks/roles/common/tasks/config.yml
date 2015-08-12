@@ -1,0 +1,25 @@
+---
+- name: ensure config path exists
+  file: path=/etc/cassandra state=directory
+
+- name: put jmx password template in place
+  template: src=jmxremote_passwd.j2 dest=/etc/cassandra/jmxremote.password owner=cassandra group=cassandra mode=0400
+
+- name: put cassandra yaml template in place 
+  template: src=cassandra_yaml.j2 dest=/etc/dse/cassandra/cassandra.yaml owner=cassandra group=cassandra
+
+#- name: comment out localhost on external int
+#  lineinfile: "dest=/etc/dse/cassandra/cassandra.yaml regexp='^listen_address: localhost' line='listen_interface: {{ external_int }}' backrefs=yes"
+
+#- name: comment out localhost on internal rpc int
+#  lineinfile: "dest=/etc/dse/cassandra/cassandra.yaml regexp='^rpc_address: localhost' line='rpc_interface: {{ internal_int }}' backrefs=yes"
+
+#- name: add seed nodes
+#  lineinfile: "dest=/etc/dse/cassandra/cassandra.yaml regexp='- seeds: "127.0.0.1"' line
+
+- name: allow jmx to listen for remote connections
+  lineinfile: dest=/etc/dse/cassandra/cassandra-env.sh regexp='^LOCAL_JMX=yes' line='LOCAL_JMX=no' backrefs=yes
+
+- name: turn off jmx auth
+  lineinfile: dest=/etc/dse/cassandra/cassandra-env.sh regexp='jmxremote.authenticate=true' line='  JVM_OPTS="$JVM_OPTS -Dcom.sun.management.jmxremote.authenticate=false"' backrefs=yes
+  notify: restart dse

@@ -1,0 +1,15 @@
+- name: install opscenter
+  yum: name=opscenter state=present
+
+- name: start opscenter
+  service: name=opscenterd state=started
+
+#- name: login to opscenter and get session 
+#  uri:
+#    url: {{ opscenter_uri }}/opscenter/index.html
+#    method: POST
+#    user: {{ opscenter_user }}
+#    password: {{ opscenter_pass }}
+#    force_basic_auth: yes
+#    status_code: 201
+#  register: sessionid

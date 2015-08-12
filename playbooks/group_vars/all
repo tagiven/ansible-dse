@@ -1,0 +1,8 @@
+---
+cluster_name: testcluster
+dserepouser: 'user'
+dserepopass: 'pass'
+external_int: 'eth0'
+internal_int: 'eth1'
+jmxuser: cassandra
+jmxpass: cassandra

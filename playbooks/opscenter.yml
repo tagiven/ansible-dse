@@ -1,0 +1,7 @@
+- name: "Apply the ambari-agent role to all nodes"
+  hosts: opscenter
+  sudo: yes
+  sudo_user: root
+  roles:
+    - opscenter
+
