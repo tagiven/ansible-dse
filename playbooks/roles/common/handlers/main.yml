@@ -9,5 +9,8 @@
 - name: start dse
   service: name=dse state=start
 
+- name: restart ds agent
+  service: name=datastax-agent state=restarted
+
 - name: Gather facts
   action: setup
