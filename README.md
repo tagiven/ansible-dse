@@ -28,10 +28,10 @@ Instructions:
      jmxpass: cassandra
 ```
 ```
-bash dse-rax.sh
+bash dse-dedicated.sh
 ```
 
-To provision Rackspace public cloud continue with these steps:
+To provision Rackspace public cloud use these steps:
 
 To customize, change the variables under `playbooks/group_vars/cassandra-nodes`:
 
