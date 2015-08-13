@@ -11,7 +11,8 @@ Instructions:
   - Edit inventory/hosts to include all hosts you expect to install DSE on
 
   - Edit playbooks/groupvars/all 
-    ---
+    
+```
     name your cluster
      cluster_name: testcluster
 
@@ -26,7 +27,10 @@ Instructions:
     JMX is not currently enabled in the code but here for future use
      jmxuser: cassandra
      jmxpass: cassandra
-    ---
+```
 
-Run: ./dse.sh
+Run: 
+```
+./dse.sh
+```
 
