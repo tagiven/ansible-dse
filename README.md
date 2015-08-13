@@ -2,12 +2,11 @@
 
 Best Practices for installing Datastax Enterprise
 
-Requires: ansible >= 1.9.2
-          CentOS 7
-
 Currently no disk formating occurs but will likely be added soon for provisioning a data dir
 
 Instructions: 
+
+  When provisioning DSE on existing infrastructure:
   - Edit inventory/hosts to include all hosts you expect to install DSE on
 
   - Edit playbooks/groupvars/all 
@@ -28,9 +27,46 @@ Instructions:
      jmxuser: cassandra
      jmxpass: cassandra
 ```
+```
+bash dse-rax.sh
+```
 
-Run: 
+To provision Rackspace public cloud continue with these steps:
+
+To customize, change the variables under `playbooks/group_vars/cassandra-nodes`:
+
+modify `cloud_nodes_count` to control the number of nodes in your cluster
+
+## [Requirements] (id:requirements)
+
+- Ansible >= 1.9.2
+
+- Expects CentOS 7
+
+- Building the cloud environment requires the `pyrax` Python module: https://github.com/rackspace/pyrax
+
+  Also recommended is to run `pip install oslo.config netifaces`.
+
+- The cloud environment requires the standard pyrax credentials file that looks like this:
+  ````
+  [rackspace_cloud]
+  username = my_username
+  api_key = 01234567890abcdef
+  ````
+  
+  This file will be referenced in `playbooks/group_vars/all` (the `rax_credentials_file` variable).
+
+  By default, the file is expected to be: `~/.raxpub`
+
+## [Scripts] (id:scripts)
+
+To provision a cloud environment, run the `provision_rax.sh` script after you've customized the variables under:
+
+````
+bash provision_rax.sh
+````
 ```
-./dse.sh
+bash dse-rax.sh
 ```
+
 
