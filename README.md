@@ -69,4 +69,18 @@ bash provision_rax.sh
 bash dse-rax.sh
 ```
 
+## [Additionally] (id:additionally)
+
+All firewall rules provided here allow the cluster to access itself and only allows ssh access from outside.
+
+Opscenter is configured to be installed on the first server alpha-numerically in the list.
+
+to access opscenter:
+```
+ssh -D 12345 root@{{ opscenter-node }}
+```
+
+configure a browser to use localhost port 12345 as socks proxy 
+
+browse to the opscenter node ip port 8888
 
