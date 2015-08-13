@@ -18,7 +18,7 @@
 #  lineinfile: "dest=/etc/dse/cassandra/cassandra.yaml regexp='- seeds: "127.0.0.1"' line
 
 - name: allow jmx to listen for remote connections
-  lineinfile: dest=/etc/dse/cassandra/cassandra-env.sh regexp='^LOCAL_JMX=yes' line='LOCAL_JMX=no' backrefs=yes
+  lineinfile: dest=/etc/dse/cassandra/cassandra-env.sh regexp='^LOCAL_JMX=no' line='LOCAL_JMX=yes' backrefs=yes
 
 - name: turn off jmx auth
   lineinfile: dest=/etc/dse/cassandra/cassandra-env.sh regexp='jmxremote.authenticate=true' line='  JVM_OPTS="$JVM_OPTS -Dcom.sun.management.jmxremote.authenticate=false"' backrefs=yes

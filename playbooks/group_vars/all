@@ -8,3 +8,16 @@ jmxuser: cassandra
 jmxpass: cassandra
 opscenter_uri: '127.0.0.1'
 tokens: 256
+
+# set to true to show host variables
+debug: true
+
+cloud_config:
+  rax_credentials_file: '~/.raxpub'
+  rax_region: 'DFW'
+  domain: 'localnet'
+  allowed_external_ips: ['127.0.0.1']
+  ssh:
+    keyname: 'dse-ssh-key'
+    keyfile: '~/.ssh/id_rsa.pub'
+
