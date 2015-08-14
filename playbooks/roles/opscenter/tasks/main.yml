@@ -24,6 +24,7 @@
   register: cluster
   tags:
     - cluster_create
+  notify: restart datastax-agent  
 
 #- name: login to opscenter and get session 
 #  uri:
