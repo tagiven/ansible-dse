@@ -4,6 +4,7 @@ dserepouser: 'user'
 dserepopass: 'pass'
 external_int: 'eth0'
 internal_int: 'eth1'
+cluster_interface: '{{ internal_int }}'
 jmxuser: cassandra
 jmxpass: cassandra
 opscenter_uri: '127.0.0.1'
