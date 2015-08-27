@@ -1,7 +1,6 @@
 topology:
-      # mmartinez: this needs to be dynamic..
-    - dc_name: CLOUD
+    - dc_name: CLOUD{{ item }}
       racks:
           - rack_name: c1
             nodes:
-                - broadcast_address: {{ ansible_eth0['ipv4']['address'] }}
+                - broadcast_address: {{ ansible_{{ cluster_interface }}['ipv4']['address'] }}

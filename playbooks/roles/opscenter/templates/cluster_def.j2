@@ -1,7 +1,7 @@
 {
     "cassandra": {
       "seed_hosts": "{% for seed in groups['dse-cluster'] -%}
-          {{ hostvars[seed]['ansible_eth0']['ipv4']['address'] }}
+          {{ hostvars[seed][['ansible_', hostvars[seed]['cluster_interface']]|join]['ipv4']['address'] }}
           {%- if not loop.last %},{% endif -%}
           {%- endfor %}"
     }
