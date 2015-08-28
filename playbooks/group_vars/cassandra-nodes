@@ -13,6 +13,18 @@ cbs_disks_size: 100
 cbs_disks_type: 'SATA'
 data_disks_devices: ['xvde', 'xvdf']
 
+cluster_opts:
+  iad_cluster:
+    region: "IAD"
+    node_count: 3
+  dfw_cluster:
+    region: "DFW"
+    node_count: 3
+#  ord_cluster:
+#    region: "ORD"
+#    node_count: 3
+
+
 ###########
 # onmetal #
 ###########
