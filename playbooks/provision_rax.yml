@@ -14,7 +14,6 @@
         name: "{{ cloud_config.ssh.keyname }}"
         public_key: "{{ lookup('file', cloud_config.ssh.keyfile) }}"
         region: "{{ item.value.region }}"
-        #region: "{{ cloud_config.rax_region }}"
       with_dict: cluster_opts
 
     - name: "Create cassandra nodes"
@@ -36,50 +35,38 @@
       with_dict: cluster_opts
       register: rax_dse
 
-    - name: "Show debug info"
-      hosts: localhost
-      connection: local
-      gather_facts: False
-      tasks:
-      - name: "Show rax_dse info"
-        debug: var=rax_dse
 
+#Blockstorage needs mult-region support
+    - name: "Create CBS Volumes for cassandra nodes"
+      local_action:
+        module: rax_cbs
+        credentials: "{{ cloud_config.rax_credentials_file }}"
+        name: "{{ item[0].name }}_{{ item[1] }}"
+        volume_type: "{{ cbs_disks_type }}"
+        size: "{{ cbs_disks_size }}"
+        region: "{{ cloud_config.rax_region }}"
+        state: present
+        wait: true
+      with_nested:
+        - rax_dse.instances
+        - data_disks_devices
+      when: cloud_nodes_count > 0 and build_cbs
 
-#    - name: "Create CBS Volumes for cassandra nodes"
-#      local_action:
-#        module: rax_cbs
-#        credentials: "{{ cloud_config.rax_credentials_file }}"
-#        name: "{{ item[0].name }}_{{ item[1] }}"
-#        volume_type: "{{ cbs_disks_type }}"
-#        size: "{{ cbs_disks_size }}"
-#        region: "{{ cloud_config.rax_region }}"
-#        state: present
-#        wait: true
-#      with_nested:
-#        - rax_dse.instances
-#        - data_disks_devices
-#      when: cloud_nodes_count > 0 and build_cbs
-#
-#    - name: "Attach CBS Volumes to cassandra nodes"
-#      local_action:
-#        module: rax_cbs_attachments
-#        credentials: "{{ cloud_config.rax_credentials_file }}"
-#        volume: "{{ item[0].name }}_{{ item[1] }}"
-#        server: "{{ item[0].id }}"
-#        region: "{{ cloud_config.rax_region }}"
-#        device: "/dev/{{ item[1] }}"
-#        state: present
-#        wait: true
-#      with_nested:
-#        - rax_dse.instances
-#        - data_disks_devices
-#      when: cloud_nodes_count > 0 and build_cbs
+    - name: "Attach CBS Volumes to cassandra nodes"
+      local_action:
+        module: rax_cbs_attachments
+        credentials: "{{ cloud_config.rax_credentials_file }}"
+        volume: "{{ item[0].name }}_{{ item[1] }}"
+        server: "{{ item[0].id }}"
+        region: "{{ cloud_config.rax_region }}"
+        device: "/dev/{{ item[1] }}"
+        state: present
+        wait: true
+      with_nested:
+        - rax_dse.instances
+        - data_disks_devices
+      when: cloud_nodes_count > 0 and build_cbs
 
-- name: "Show debug info"
-  hosts: localhost
-  connection: local
-  gather_facts: False
-  tasks:
     - name: "Show rax_dse info"
       debug: var=rax_dse
       when: debug
