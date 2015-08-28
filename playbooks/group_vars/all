@@ -4,7 +4,7 @@ dserepouser: 'user'
 dserepopass: 'pass'
 external_int: 'eth0'
 internal_int: 'eth1'
-cluster_interface: '{{ internal_int }}'
+cluster_interface: '{{ external_int }}'
 jmxuser: cassandra
 jmxpass: cassandra
 opscenter_uri: '127.0.0.1'
@@ -15,10 +15,9 @@ debug: true
 
 cloud_config:
   rax_credentials_file: '~/.raxpub'
-  rax_region: 'DFW'
+  rax_region: 'DFW, IAD'
   domain: 'localnet'
   allowed_external_ips: ['127.0.0.1']
   ssh:
     keyname: 'dse-ssh-key'
     keyfile: '~/.ssh/id_rsa.pub'
-

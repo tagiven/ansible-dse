@@ -7,16 +7,7 @@
 
 - name: put cassandra yaml template in place 
   template: src=cassandra_yaml.j2 dest=/etc/dse/cassandra/cassandra.yaml owner=cassandra group=cassandra
-
-#- name: comment out localhost on external int
-#  lineinfile: "dest=/etc/dse/cassandra/cassandra.yaml regexp='^listen_address: localhost' line='listen_interface: {{ external_int }}' backrefs=yes"
-
-#- name: comment out localhost on internal rpc int
-#  lineinfile: "dest=/etc/dse/cassandra/cassandra.yaml regexp='^rpc_address: localhost' line='rpc_interface: {{ internal_int }}' backrefs=yes"
-
-#- name: add seed nodes
-#  lineinfile: "dest=/etc/dse/cassandra/cassandra.yaml regexp='- seeds: "127.0.0.1"' line
-
+  
 - name: allow jmx to listen for remote connections
   lineinfile: dest=/etc/dse/cassandra/cassandra-env.sh regexp='^LOCAL_JMX=no' line='LOCAL_JMX=yes' backrefs=yes
 

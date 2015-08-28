@@ -20,7 +20,7 @@
       - always
 
 - name: run common
-  hosts: dse-cluster
+  hosts: dse-nodes
   remote_user: root
   roles:
     - common
