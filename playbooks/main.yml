@@ -33,3 +33,10 @@
   tags:
     - opscenter
 
+- name: "Install sensu monitoring agent"
+  hosts: dse-nodes
+  remote_user: root
+  roles:
+    - monitoring
+  tags:
+    - monitoring
