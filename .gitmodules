@@ -1,0 +1,3 @@
+[submodule "playbooks/roles/monitoring"]
+	path = playbooks/roles/monitoring
+	url = git@github.com:tagiven/ansible-playbook-sensu.git
